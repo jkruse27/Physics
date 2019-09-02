@@ -41,8 +41,10 @@ class Circle{
 class Physics{
 	
 	constructor(canvas, acceleration = 9.81){
+		var date = new Date();
+		this.d = date;
 		this.acceleration = acceleration;
-		this.t = 0;
+		this.t = 0.017;
 		this.gameArea = canvas;
 		this.context = this.gameArea.getContext("2d");
 	}
@@ -78,13 +80,11 @@ class Physics{
 	}
 
 	update(c1){
-
 		c1 = this.calculatePosition(c1, this.t);
 		c1 = this.calculateVelocity(c1, this.t);
 		this.context.arc(c1.x_position, c1.y_position, c1.radius, 0, 2*Math.PI);
 		this.context.fillStyle = "black";
 		this.context.fill();
-		this.t++;
 		return c1
 	}
 
@@ -100,7 +100,7 @@ var canvas = document.getElementById("game");
 var c1 = new Circle(100, 100, 100, 0, 0, 0, 10, 20);
 var phys = new Physics(canvas);
 
-var id = setInterval(iteration, 100);
+var id = setInterval(iteration, 17);
 
 function iteration(){
 	phys.clear();
