@@ -98,6 +98,7 @@ class Physics{
 
 var canvas = document.getElementById("game");
 var c1 = new Circle(100, 100, 100, 0, 0, 0, 10, 20);
+var c2 = new Circle(200, 100, -100, 0, 0, 0, 10, 20)
 var phys = new Physics(canvas);
 
 var id = setInterval(iteration, 17);
@@ -105,5 +106,7 @@ var id = setInterval(iteration, 17);
 function iteration(){
 	phys.clear();
 	phys.update(c1);
+	phys.update(c2);
+	console.log(phys.isInteracting(c2,c1));
 }
 
