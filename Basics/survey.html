@@ -2,9 +2,24 @@
 
 <html>
 	<head>
+		<meta charset="UTF-8">
+		<script src="scripts/forms.js"></script>
 		<title>Survey and text manipulation test page</title>
 	</head>
 	<body>
-	
+		<p>The user and password are halter123 and 1q2w3e4r5t</p>
+		<form>
+			User:<br>
+			<input type"text" name="username" id="username"><br>
+			Password<br>
+			<input type="password" name="psw">
+		</form>	
+		<form action="choice.js">
+			<input type="radio" name="gender" value="male" checked> Male <br>
+			<input type="radio" name="gender" value="female" checked>Female <br>
+			<input type="radio" name="gender" value="other" checked>Other
+		</form>
+		<input type="submit" onclick="submited()" value="Submit">
+		<h1 id="textinho"></h1>
 	</body>
 </html>
