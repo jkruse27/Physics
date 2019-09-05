@@ -12,28 +12,28 @@ class Circle{
 	}
 
 	setXP(new_value){
-		x_position = new_value;
+		this.x_position = new_value;
 	}
 
 	setYP(new_value){
-		y_position = new_value;
+		this.y_position = new_value;
 	}
 
 	setXV(new_value){
-		x_velocity = new_value;
+		this.x_velocity = new_value;
 	}
 
 	setYV(new_value){
-		y_velocity = new_value;
+		this.y_velocity = new_value;
 	}
 
 
 	setXA(new_value){
-		x_acceleration = new_value;
+		this.x_acceleration = new_value;
 	}
 
 	setXA(new_value){
-		y_acceleration = new_value;
+		this.y_acceleration = new_value;
 	}
 
 }
@@ -63,18 +63,12 @@ class Physics{
 	
 	isInteracting(obj1, obj2){
 		var ret = false;
-		if(((obj1.x_position+obj1.radius)<=(obj2.x_position-obj2.radius))&&((obj1.y_position+obj1.radius)<=(obj2.y_position-obj2.radius))){
-			ret = true;
+		if(((obj1.x_position+obj1.radius)>=(obj2.x_position-obj2.radius))&&((obj1.x_position-obj1.radius)<=(obj2.x_position+obj2.radius))){
+			if(((obj1.y_position+obj1.radius)>=(obj2.y_position-obj2.radius))&&((obj1.y_position-obj1.radius)<=(obj2.y_position+obj2.radius))){
+				ret = true;
+			}
 		}
-		if(((obj2.x_position+obj2.radius)<=(obj1.x_position-obj1.radius))&&((obj2.y_position+obj2.radius)<=(obj1.y_position-obj1.radius))){
-			ret = true;
-		}
-		if(((obj1.x_position+obj1.radius)<=(obj2.x_position-obj2.radius))&&((obj2.y_position+obj2.radius)<=(obj1.y_position-obj1.radius))){
-			ret = true;
-		}
-		if(((obj2.x_position+obj2.radius)<=(obj1.x_position-obj1.radius))&&((obj1.y_position+obj1.radius)<=(obj2.y_position-obj2.radius))){
-			ret = true;
-		}
+		
 
 		return ret;
 	}
@@ -107,6 +101,12 @@ function iteration(){
 	phys.clear();
 	phys.update(c1);
 	phys.update(c2);
-	console.log(phys.isInteracting(c2,c1));
+	if(phys.isInteracting(c2, c1)){
+		c1.setXV(-1*(c1.x_velocity));
+		c2.setXV(-1*(c2.x_velocity));
+	}
+	
 }
+
+
 
