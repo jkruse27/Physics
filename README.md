@@ -2,6 +2,6 @@
 
 Repository for physics related projects and practice
 
-* Current programs:
+* Current projects:
 	* Heat Equation Simulation (difference equation)
 	* Schrodingers Equation Simulation (difference equation)
