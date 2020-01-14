@@ -84,6 +84,10 @@ line, = ax.plot(interval, x)
 ax.set_xlabel("Position (cm)")
 ax.set_ylabel("Temperature (K)")
 
+def init():
+    line.set_ydata(x)
+    return line,
+
 def animate(i):
     global next_u
     global u
@@ -95,6 +99,7 @@ def animate(i):
     u = [i for i in next_u]
     return line,
 
-ani = animation.FuncAnimation(fig, animate, interval=1)
+ani = animation.FuncAnimation(fig, animate, blit=True, interval=1)
 
 plt.show()
+
