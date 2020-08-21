@@ -5,7 +5,7 @@ PROGRAM genetic
 	! Declaring variables
 	INTEGER, DIMENSION(100) :: main_fitness
 	INTEGER, DIMENSION(3) :: main_selection
-	INTEGER :: i, individual_size, counter
+	INTEGER :: i, individual_size, counter, iterations
 
 	CHARACTER (LEN=20) :: target_string
 	CHARACTER (LEN=20), DIMENSION(100) :: population
@@ -14,6 +14,8 @@ PROGRAM genetic
 	! Choosing the target string
 	PRINT *, "Choose the target string (20 chars max):"
 	READ *, target_string
+	
+	PRINT *, "Fittest ", "Offspring ", "Target"
 	
 	individual_size = LEN(TRIM(target_string))
 
@@ -25,6 +27,7 @@ PROGRAM genetic
 	main_selection = selection(main_fitness)
 
 	counter = 0
+	iterations = 0
 
 	! Iterating through generations until the target string is reached
 	DO WHILE (target_string /= population(main_selection(1)))
@@ -41,15 +44,19 @@ PROGRAM genetic
 	
 		population = crossover(population, main_selection, individual_size)
 		population = mutation(population, main_selection, individual_size)
+
+		PRINT *, population(main_selection(1)), population(main_selection(3)), target_string
 	
 		main_fitness = fitness(population, target_string, individual_size)
 		main_selection = selection(main_fitness)	
 
-		PRINT *, population(main_selection(1)), target_string
 		counter = counter + 1	
+		iterations = iterations + 1
 	END DO	
 	
+	PRINT *, " "
 	PRINT *, "Final String: ", population(main_selection(1))
+	PRINT *, "Iterations: ", iterations
 CONTAINS
 
 
@@ -177,7 +184,7 @@ FUNCTION mutation (population, selection, individual_size) RESULT (population1)
 
 	CHARACTER (LEN=20), DIMENSION(100) :: population, population1
 
-	num_mutations = MOD(IRAND(), 1)
+	num_mutations = MOD(IRAND(), 2)
 
 	DO i = 0, num_mutations
 		pos_mutation = MOD(IRAND(), individual_size+1)
