@@ -49,7 +49,7 @@ PROGRAM genetic
 		counter = counter + 1	
 	END DO	
 	
-	PRINT *, "Final String:", population(main_selection(1))
+	PRINT *, "Final String: ", population(main_selection(1))
 CONTAINS
 
 
