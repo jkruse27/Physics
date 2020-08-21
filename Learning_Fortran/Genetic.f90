@@ -1,14 +1,18 @@
+#define POPULATION_SIZE 100
+#define WORD_SIZE 20
+#define MUTATIONS 2
+
 PROGRAM genetic
 	
 	IMPLICIT NONE	
 	
 	! Declaring variables
-	INTEGER, DIMENSION(100) :: main_fitness
+	INTEGER, DIMENSION(POPULATION_SIZE) :: main_fitness
 	INTEGER, DIMENSION(3) :: main_selection
 	INTEGER :: i, individual_size, counter, iterations
 
-	CHARACTER (LEN=20) :: target_string
-	CHARACTER (LEN=20), DIMENSION(100) :: population
+	CHARACTER (LEN=WORD_SIZE) :: target_string
+	CHARACTER (LEN=WORD_SIZE), DIMENSION(POPULATION_SIZE) :: population
 	CHARACTER :: answer	
 
 	! Choosing the target string
@@ -70,10 +74,10 @@ FUNCTION generate_initial_population (individual_size) RESULT (population)
 	INTEGER :: i, j
 	INTEGER, DIMENSION(3) :: selection
 	
-	CHARACTER (LEN=20), DIMENSION(100) :: population
-	CHARACTER(LEN=20) :: string
+	CHARACTER (LEN=WORD_SIZE), DIMENSION(POPULATION_SIZE) :: population
+	CHARACTER(LEN=WORD_SIZE) :: string
 
-	DO i = 1, 100
+	DO i = 1, POPULATION_SIZE
 		string = ''
 		DO j = 1, individual_size
 			string = string(1:j)//ACHAR(97+MOD(IRAND(), 26))
@@ -88,14 +92,14 @@ FUNCTION fitness (population, target_string, individual_size)
 	
 	IMPLICIT NONE
 
-	INTEGER, DIMENSION(100) :: fitness
+	INTEGER, DIMENSION(POPULATION_SIZE) :: fitness
 	INTEGER :: individual_size
 	INTEGER :: i, j
 
-	CHARACTER (LEN=20), DIMENSION(100) :: population
-	CHARACTER (LEN=20) :: target_string
+	CHARACTER (LEN=WORD_SIZE), DIMENSION(POPULATION_SIZE) :: population
+	CHARACTER (LEN=WORD_SIZE) :: target_string
 
-	DO i = 1, 100
+	DO i = 1, POPULATION_SIZE
 		fitness(i) = 0
 		DO j = 1, individual_size
 			IF (population(i)(j:j) == target_string(j:j)) THEN
@@ -112,7 +116,7 @@ FUNCTION selection (fitness)
 	
 	IMPLICIT NONE
 
-	INTEGER, DIMENSION(100) :: fitness
+	INTEGER, DIMENSION(POPULATION_SIZE) :: fitness
 	INTEGER, DIMENSION(3) :: selection
 	INTEGER :: i	
 
@@ -120,7 +124,7 @@ FUNCTION selection (fitness)
 	selection(2) = 2
 	selection(3) = 3
 
-	DO i = 1, 100
+	DO i = 1, POPULATION_SIZE
 		IF (fitness(i) > fitness(selection(1))) THEN
 			selection(2) = selection(1)
 			selection(1) = i
@@ -142,8 +146,8 @@ FUNCTION crossover (population, selection, individual_size) RESULT (population1)
 	INTEGER :: individual_size
 	INTEGER :: i, random, fit1, fit2
 
-	CHARACTER (LEN=20), DIMENSION(100) :: population, population1
-	CHARACTER(LEN=30) :: offspring1, offspring2
+	CHARACTER (LEN=WORD_SIZE), DIMENSION(POPULATION_SIZE) :: population, population1
+	CHARACTER(LEN=WORD_SIZE) :: offspring1, offspring2
 
 	random = 1+MOD(IRAND(), individual_size)	
 
@@ -182,9 +186,9 @@ FUNCTION mutation (population, selection, individual_size) RESULT (population1)
 	INTEGER :: individual_size
 	INTEGER :: i, num_mutations, pos_mutation
 
-	CHARACTER (LEN=20), DIMENSION(100) :: population, population1
+	CHARACTER (LEN=WORD_SIZE), DIMENSION(POPULATION_SIZE) :: population, population1
 
-	num_mutations = MOD(IRAND(), 2)
+	num_mutations = MOD(IRAND(), MUTATIONS)
 
 	DO i = 0, num_mutations
 		pos_mutation = MOD(IRAND(), individual_size+1)
