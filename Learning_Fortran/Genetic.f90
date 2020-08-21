@@ -7,7 +7,7 @@ PROGRAM genetic
 	INTEGER, DIMENSION(3) :: main_selection
 	INTEGER :: i, individual_size, counter
 
-	CHARACTER (len = 20) :: target_string
+	CHARACTER (LEN=20) :: target_string
 	CHARACTER (LEN=20), DIMENSION(100) :: population
 	CHARACTER :: answer	
 
@@ -39,18 +39,19 @@ PROGRAM genetic
 			END IF
 		END IF	
 	
-		PRINT *, population(main_selection(1))
 		population = crossover(population, main_selection, individual_size)
 		population = mutation(population, main_selection, individual_size)
 	
 		main_fitness = fitness(population, target_string, individual_size)
 		main_selection = selection(main_fitness)	
 
+		PRINT *, population(main_selection(1)), target_string
 		counter = counter + 1	
 	END DO	
 	
 	PRINT *, "Final String:", population(main_selection(1))
 CONTAINS
+
 
 ! Function that generates the initial population
 ! Receives the number of individuals in the population and the size of each individual
@@ -63,14 +64,14 @@ FUNCTION generate_initial_population (individual_size) RESULT (population)
 	INTEGER, DIMENSION(3) :: selection
 	
 	CHARACTER (LEN=20), DIMENSION(100) :: population
-	CHARACTER(LEN=30) :: string
+	CHARACTER(LEN=20) :: string
 
-	DO i = 0, 100
+	DO i = 1, 100
 		string = ''
-		DO j = 0, individual_size-1
+		DO j = 1, individual_size
 			string = string(1:j)//ACHAR(97+MOD(IRAND(), 26))
 		END DO
-		population(i) = string
+		population(i) = string(1:individual_size)
 	END DO
 	
 END FUNCTION generate_initial_population
@@ -85,9 +86,7 @@ FUNCTION fitness (population, target_string, individual_size)
 	INTEGER :: i, j
 
 	CHARACTER (LEN=20), DIMENSION(100) :: population
-	CHARACTER (len = 20) :: target_string
-
-	target_string = target_string
+	CHARACTER (LEN=20) :: target_string
 
 	DO i = 1, 100
 		fitness(i) = 0
@@ -181,7 +180,7 @@ FUNCTION mutation (population, selection, individual_size) RESULT (population1)
 	num_mutations = MOD(IRAND(), 1)
 
 	DO i = 0, num_mutations
-		pos_mutation = MOD(IRAND(), individual_size)
+		pos_mutation = MOD(IRAND(), individual_size+1)
 		population(selection(3)) = TRIM(population(selection(3))(1:pos_mutation-1))//&
 					   ACHAR(97+MOD(IRAND(), 26))//&
 					   TRIM(population(selection(3))(pos_mutation+1:individual_size))
