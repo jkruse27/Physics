@@ -5,6 +5,7 @@ Repository for physics related projects and practice on programing languages
 * Fortran
 	* Calculator
 	* Genetic Algorithm
+	* Solar System
 
 * Javascritpt
 	* Drawing circles
